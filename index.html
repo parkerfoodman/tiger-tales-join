@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join Tiger Tales</title>
+<meta name="description" content="Create your Tiger Tales account — the Clemson student-life wiki. No captcha, 20 seconds.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F56600'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Georgia,serif' font-weight='700' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --orange: #F56600; --orange-dark: #d65800; --purple: #522D80; --purple-dark: #3d2160;
+    --bg: #FFF7F0; --card: #ffffff; --ink: #1f1a24; --muted: #6b6572; --line: #e7dfe9;
+    --ok: #1f8f4e; --bad: #c0392b; --warn: #a66a00; --field: #fbfaf8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17121c; --card: #221b2b; --ink: #f2eef5; --muted: #b3a9bc; --line: #3b3146; --field: #1b1522;
+      --orange-dark: #ff8a33; --ok: #4fc67f; --bad: #ff7b6b; --warn: #ffbf47;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17121c; --card: #221b2b; --ink: #f2eef5; --muted: #b3a9bc; --line: #3b3146; --field: #1b1522;
+    --orange-dark: #ff8a33; --ok: #4fc67f; --bad: #ff7b6b; --warn: #ffbf47;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45; min-height: 100vh; display: flex; flex-direction: column;
+  }
+  .stripe { height: 6px; background: linear-gradient(90deg, var(--orange) 0 50%, var(--purple) 50% 100%); }
+  main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 28px 16px 40px; }
+  .card {
+    width: 100%; max-width: 440px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 26px 22px 22px; box-shadow: 0 10px 30px rgba(82,45,128,.08);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; text-decoration: none; color: inherit; }
+  .brand .mark { width: 42px; height: 42px; border-radius: 11px; background: var(--orange); color: #fff; display: grid; place-items: center; font: 700 24px Georgia, "Times New Roman", serif; flex: none; }
+  .brand .name { font: 700 20px/1.1 Georgia, "Times New Roman", serif; }
+  .brand .sub { font-size: 12.5px; color: var(--muted); }
+  h1 { font: 700 26px/1.15 Georgia, "Times New Roman", serif; margin: 16px 0 6px; }
+  .lede { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 6px; }
+  label .opt { font-weight: 400; color: var(--muted); }
+  .field { position: relative; }
+  input[type=text], input[type=password], input[type=email] {
+    width: 100%; font: inherit; font-size: 16px; padding: 11px 12px; border: 1.5px solid var(--line);
+    border-radius: 10px; background: var(--field); color: var(--ink); outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(82,45,128,.15); }
+  input.ok { border-color: var(--ok); }
+  input.bad { border-color: var(--bad); }
+  .hint { font-size: 13px; color: var(--muted); margin-top: 5px; min-height: 18px; }
+  .hint.ok { color: var(--ok); }
+  .hint.bad { color: var(--bad); }
+  .hint.warn { color: var(--warn); }
+  .showpw { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--purple); font: 600 13px inherit; cursor: pointer; padding: 6px; }
+  .q { background: rgba(245,102,0,.07); border: 1px dashed rgba(245,102,0,.5); border-radius: 12px; padding: 12px 12px 10px; margin-top: 18px; }
+  .q label { margin-top: 0; }
+  .q .why { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .hp { position: absolute; left: -9999px; top: -9999px; height: 0; width: 0; opacity: 0; }
+  button.primary {
+    width: 100%; margin-top: 20px; padding: 13px 16px; font: 700 17px inherit; color: #fff;
+    background: var(--orange); border: 0; border-radius: 12px; cursor: pointer; transition: background .15s, transform .05s;
+  }
+  button.primary:hover { background: var(--orange-dark); }
+  button.primary:active { transform: translateY(1px); }
+  button.primary[disabled] { opacity: .6; cursor: default; }
+  .alt { text-align: center; font-size: 14px; color: var(--muted); margin-top: 14px; }
+  .alt a, .fine a { color: var(--purple); font-weight: 600; }
+  .fine { font-size: 12.5px; color: var(--muted); margin-top: 16px; text-align: center; }
+  .banner { border-radius: 12px; padding: 12px 14px; font-size: 14.5px; margin-top: 16px; display: none; }
+  .banner.bad { display: block; background: rgba(192,57,43,.09); border: 1px solid rgba(192,57,43,.35); }
+  .banner.warn { display: block; background: rgba(166,106,0,.09); border: 1px solid rgba(166,106,0,.35); }
+  .banner a { color: var(--purple); font-weight: 600; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2.5px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -3px; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  /* success */
+  .done { text-align: center; padding: 10px 0 4px; }
+  .done .big { width: 72px; height: 72px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; margin: 4px auto 14px; font-size: 34px; }
+  .done h1 { margin-top: 0; }
+  .done p { color: var(--muted); margin: 6px 0 0; }
+  .done .primary { text-decoration: none; display: block; text-align: center; }
+  .done .tip { text-align: left; background: rgba(82,45,128,.07); border-radius: 12px; padding: 12px 14px; font-size: 14px; margin-top: 18px; color: var(--ink); }
+  footer { text-align: center; font-size: 12.5px; color: var(--muted); padding: 0 16px 22px; }
+  footer a { color: var(--purple); }
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<main>
+  <div class="card" id="card">
+    <a class="brand" href="https://tigertalesclemson.com/" id="brand">
+      <div class="mark">T</div>
+      <div><div class="name">Tiger Tales</div><div class="sub">A Clemson Wiki</div></div>
+    </a>
+
+    <form id="form" novalidate autocomplete="on">
+      <h1>Join Tiger Tales</h1>
+      <p class="lede">Create your account in about 20 seconds. No captcha, no puzzles.</p>
+
+      <label for="username">Username</label>
+      <div class="field">
+        <input type="text" id="username" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="60" placeholder="e.g. TigerFan27" required>
+      </div>
+      <div class="hint" id="username-hint">This is what shows on your edits and in game leaderboards.</div>
+
+      <label for="password">Password</label>
+      <div class="field">
+        <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+        <button type="button" class="showpw" id="showpw" aria-label="Show password">Show</button>
+      </div>
+      <div class="hint" id="password-hint"></div>
+
+      <label for="email">Email</label>
+      <div class="field">
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="you@gmail.com" required>
+      </div>
+      <div class="hint" id="email-hint">Used for password resets and Yearbook notes. A personal email (Gmail, iCloud…) works best; Clemson's spam filter often hides our emails.</div>
+
+      <div class="q">
+        <label for="answer" id="qtext">Loading a quick question…</label>
+        <input type="text" id="answer" name="answer" autocomplete="off" autocapitalize="off" placeholder="Your answer" required>
+        <div class="why">One Clemson question instead of a captcha.</div>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="banner" id="banner" role="alert"></div>
+
+      <button type="submit" class="primary" id="submit">Create my account</button>
+
+      <div class="alt">Already have an account? <a id="login-link" href="https://tigertalesclemson.com/wiki/Log_in">Log in</a></div>
+      <div class="fine">Your email is never shown publicly. Be yourself, write about Clemson, keep it kind.</div>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="big">🐅</div>
+      <h1 id="done-title">You're in, <span id="done-name"></span>!</h1>
+      <p id="done-lede">Your Tiger Tales account is ready. Log in once and you're set.</p>
+      <a class="primary" id="done-login" href="#">Log in to Tiger Tales</a>
+      <div class="tip" id="done-tip"></div>
+    </div>
+  </div>
+</main>
+<footer>Trouble joining? <a href="https://tigertalesclemson.com/wiki/Special:CreateAccount">Use the standard sign-up</a> · <a href="https://tigertalesclemson.com/">tigertalesclemson.com</a></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== CONFIG: paste the Apps Script web-app URL (ends in /exec) between the quotes ===== */
+  var API_URL = 'https://script.google.com/macros/s/AKfycbxlBe57EDmcKhIMGlW5M5NFR4ksHA2CzFR1SqC_KSSUcjIM-Flp3_9XaW4rZCAHZYGN/exec';
+  /* ======================================================================================== */
+
+  var WIKI = 'https://tigertalesclemson.com';
+  var WIKI_API = WIKI + '/w/api.php';
+  var LOGIN_PAGE = WIKI + '/wiki/Log_in';
+  var FALLBACK_SIGNUP = WIKI + '/wiki/Special:CreateAccount';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('form'), username = $('username'), password = $('password'), email = $('email'), answer = $('answer');
+  var uHint = $('username-hint'), pHint = $('password-hint'), eHint = $('email-hint'), qtext = $('qtext');
+  var banner = $('banner'), submit = $('submit');
+  var params = new URLSearchParams(location.search);
+  var returnto = params.get('returnto') || '';
+  var ticket = null, questionLoaded = false, usernameState = { value: '', ok: false, final: '' };
+
+  // Keep "Log in" links carrying the return-to page.
+  function loginUrl(extra) {
+    var q = new URLSearchParams();
+    if (returnto) { q.set('returnto', returnto); }
+    if (extra) { Object.keys(extra).forEach(function (k) { q.set(k, extra[k]); }); }
+    var s = q.toString();
+    return LOGIN_PAGE + (s ? '?' + s : '');
+  }
+  $('login-link').href = loginUrl();
+
+  function setHint(el, text, cls) { el.textContent = text; el.className = 'hint' + (cls ? ' ' + cls : ''); }
+  function showBanner(html, cls) { banner.innerHTML = html; banner.className = 'banner ' + (cls || 'bad'); }
+  function hideBanner() { banner.className = 'banner'; banner.innerHTML = ''; }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  // ---- Question (fetched from the backend; answers are checked server-side) ----
+  function loadQuestion() {
+    if (!API_URL || /PASTE_APPS/.test(API_URL)) {
+      qtext.textContent = 'Sign-up is not configured yet.';
+      showBanner('This page isn\'t connected to the wiki yet. You can still <a href="' + FALLBACK_SIGNUP + '">create an account the standard way</a>.', 'warn');
+      submit.disabled = true;
+      return;
+    }
+    fetch(API_URL + (API_URL.indexOf('?') > -1 ? '&' : '?') + 'q=1&_=' + Date.now(), { method: 'GET' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.ok || !d.ticket) { throw new Error(d && d.message || 'bad response'); }
+        ticket = d.ticket; qtext.textContent = d.question; questionLoaded = true;
+      })
+      .catch(function () {
+        qtext.textContent = 'Couldn\'t load the question.';
+        showBanner('Sign-up is having trouble right now. Try again in a minute, or <a href="' + FALLBACK_SIGNUP + '">create an account the standard way</a>.', 'warn');
+      });
+  }
+
+  // ---- Username: MediaWiki rules + live availability check (anonymous, CORS via origin=*) ----
+  var BAD_CHARS = /[#<>\[\]|{}\/@:\u0000-\u001f\u007f]/;
+  function normalizeUsername(v) {
+    v = v.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!v) { return ''; }
+    return v.charAt(0).toUpperCase() + v.slice(1);
+  }
+  function localUsernameProblem(v) {
+    if (!v) { return 'Pick a username.'; }
+    if (v.length < 2) { return 'A bit longer, please.'; }
+    if (v.length > 40) { return 'Keep it under 40 characters.'; }
+    if (BAD_CHARS.test(v)) { return 'Letters, numbers and spaces are fine; no / @ : # [ ] { } | < >'; }
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(v)) { return 'That looks like an IP address — pick a name.'; }
+    if (/^[^a-z0-9]/i.test(v)) { return 'Start with a letter or number.'; }
+    return '';
+  }
+  var checkTimer = null, checkSeq = 0;
+  function checkUsername() {
+    var raw = username.value, v = normalizeUsername(raw);
+    usernameState = { value: raw, ok: false, final: v };
+    username.className = '';
+    var problem = localUsernameProblem(v);
+    if (problem) { setHint(uHint, problem, raw ? 'bad' : ''); if (raw) { username.className = 'bad'; } return; }
+    setHint(uHint, 'Checking…', '');
+    var seq = ++checkSeq;
+    var url = WIKI_API + '?action=query&list=users&usprop=cancreate&format=json&formatversion=2&origin=*&ususers=' + encodeURIComponent(v);
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      if (seq !== checkSeq) { return; }
+      var u = d && d.query && d.query.users && d.query.users[0];
+      if (!u) { throw new Error('no data'); }
+      if (u.invalid) { setHint(uHint, 'That username isn\'t allowed. Try another.', 'bad'); username.className = 'bad'; return; }
+      if (!u.missing) { setHint(uHint, '"' + v + '" is taken. Try another.', 'bad'); username.className = 'bad'; return; }
+      if (u.cancreate === false) {
+        var why = (u.cancreateerror && u.cancreateerror[0] && u.cancreateerror[0].code) || '';
+        setHint(uHint, why === 'invaliduser' ? 'That username isn\'t allowed. Try another.' : 'That username can\'t be used. Try another.', 'bad'); username.className = 'bad'; return;
+      }
+      usernameState.ok = true; username.className = 'ok';
+      setHint(uHint, (v !== raw.trim() ? 'You\'ll be "' + v + '" — ' : '') + 'available!', 'ok');
+    }).catch(function () {
+      if (seq !== checkSeq) { return; }
+      // Can't reach the wiki from here; let the server do the real check.
+      usernameState.ok = true; setHint(uHint, 'We\'ll check availability when you submit.', 'warn');
+    });
+  }
+  username.addEventListener('input', function () { clearTimeout(checkTimer); checkTimer = setTimeout(checkUsername, 350); });
+
+  // ---- Password ----
+  function checkPassword() {
+    var p = password.value, u = normalizeUsername(username.value);
+    password.className = '';
+    if (!p) { setHint(pHint, '', ''); return false; }
+    if (p.length < 8) { setHint(pHint, (8 - p.length) + ' more character' + (8 - p.length === 1 ? '' : 's'), 'bad'); password.className = 'bad'; return false; }
+    if (u && (p.toLowerCase() === u.toLowerCase() || (u.length > 3 && p.toLowerCase().indexOf(u.toLowerCase()) > -1))) { setHint(pHint, 'Your password can\'t contain your username.', 'bad'); password.className = 'bad'; return false; }
+    if (/^(password|12345678|qwertyui)/i.test(p)) { setHint(pHint, 'Too easy to guess. Try something else.', 'bad'); password.className = 'bad'; return false; }
+    setHint(pHint, p.length >= 12 ? 'Strong.' : 'Good.', 'ok'); password.className = 'ok'; return true;
+  }
+  password.addEventListener('input', checkPassword);
+  $('showpw').addEventListener('click', function () {
+    var show = password.type === 'password'; password.type = show ? 'text' : 'password'; this.textContent = show ? 'Hide' : 'Show';
+  });
+
+  // ---- Email ----
+  function checkEmail() {
+    var e = email.value.trim(); email.className = '';
+    if (!e) { setHint(eHint, 'Used for password resets and Yearbook notes. A personal email (Gmail, iCloud…) works best; Clemson\'s spam filter often hides our emails.', ''); return false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)) { setHint(eHint, 'That doesn\'t look like an email address.', 'bad'); email.className = 'bad'; return false; }
+    if (/@(g\.)?clemson\.edu$/i.test(e)) { setHint(eHint, 'Heads up: Clemson\'s spam filter often quarantines our emails. A personal address is safer, but this works too.', 'warn'); email.className = 'ok'; return true; }
+    setHint(eHint, 'Looks good.', 'ok'); email.className = 'ok'; return true;
+  }
+  email.addEventListener('input', checkEmail);
+
+  // ---- Submit ----
+  var busy = false;
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (busy) { return; }
+    hideBanner();
+    var v = normalizeUsername(username.value);
+    var problem = localUsernameProblem(v);
+    if (problem || (usernameState.final === v && !usernameState.ok && uHint.className.indexOf('bad') > -1)) {
+      setHint(uHint, problem || uHint.textContent, 'bad'); username.focus(); return;
+    }
+    if (!checkPassword()) { password.focus(); return; }
+    if (!checkEmail()) { email.focus(); return; }
+    if (!answer.value.trim()) { showBanner('Answer the Clemson question to continue.'); answer.focus(); return; }
+    if (!questionLoaded || !ticket) { showBanner('The question hasn\'t loaded yet. Give it a second and try again.', 'warn'); loadQuestion(); return; }
+
+    busy = true; submit.disabled = true; submit.innerHTML = '<span class="spinner"></span>Creating your account…';
+    var payload = {
+      ticket: ticket, username: v, password: password.value, email: email.value.trim(),
+      answer: answer.value.trim(), website: $('website').value, returnto: returnto, v: 1
+    };
+    fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok && d.id) { waitForAccount(d.id, v); return; }
+        if (d && d.ok) { success(d.username || v); return; }
+        showFailure(d);
+        busy = false; submit.disabled = false; submit.textContent = 'Create my account';
+      })
+      .catch(function () {
+        showBanner('Couldn\'t reach the sign-up service. Check your connection and try again, or <a href="' + FALLBACK_SIGNUP + '">create an account the standard way</a>.');
+        busy = false; submit.disabled = false; submit.textContent = 'Create my account';
+      });
+  });
+
+  function showFailure(d) {
+    var msg = (d && d.message) || 'Something went wrong. Please try again.';
+    var code = (d && d.code) || '';
+    if (code === 'ticket') { ticket = null; questionLoaded = false; loadQuestion(); }
+    if (code === 'answer') { answer.value = ''; answer.focus(); ticket = null; questionLoaded = false; loadQuestion(); }
+    if (code === 'userexists' || code === 'username') { username.className = 'bad'; setHint(uHint, msg, 'bad'); username.focus(); }
+    if (code === 'password') { password.className = 'bad'; setHint(pHint, msg, 'bad'); password.focus(); }
+    if (code === 'email') { email.className = 'bad'; setHint(eHint, msg, 'bad'); email.focus(); }
+    showBanner(escapeHtml(msg) + (d && d.fallback ? ' You can also <a href="' + FALLBACK_SIGNUP + '">create an account the standard way</a>.' : ''));
+  }
+
+  // The account is created by a worker a few seconds later. Poll for it; if it takes
+  // longer than ~45 s, tell the person we'll email them and keep polling quietly.
+  function waitForAccount(id, name) {
+    var started = Date.now(), shownWaiting = false, stopped = false;
+    submit.innerHTML = '<span class="spinner"></span>Creating your account…';
+    function poll() {
+      if (stopped) { return; }
+      fetch(API_URL + (API_URL.indexOf('?') > -1 ? '&' : '?') + 'status=' + encodeURIComponent(id) + '&_=' + Date.now())
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.state === 'done') { stopped = true; success(d.username || name, d.loginUrl); return; }
+          if (d && d.state === 'failed') {
+            stopped = true;
+            if (shownWaiting) { $('done').hidden = true; form.hidden = false; }
+            showFailure(d); busy = false; submit.disabled = false; submit.textContent = 'Create my account'; ticket = null; questionLoaded = false; loadQuestion();
+            return;
+          }
+          if (d && d.state === 'unknown') { stopped = true; showBanner(escapeHtml(d.message || 'Something went wrong. Please try again.')); busy = false; submit.disabled = false; submit.textContent = 'Create my account'; return; }
+          var waited = Date.now() - started;
+          if (waited > 45000 && !shownWaiting) { shownWaiting = true; showWaiting(name); }
+          if (waited < 10 * 60000) { setTimeout(poll, waited < 45000 ? 2500 : 10000); }
+        })
+        .catch(function () { setTimeout(poll, 5000); });
+    }
+    setTimeout(poll, 2500);
+  }
+
+  function showWaiting(name) {
+    form.hidden = true;
+    $('done-name').textContent = name;
+    $('done-title').textContent = 'Almost there, ' + name + '!';
+    $('done-lede').textContent = 'Your account is being set up. We\'ll email you as soon as it\'s ready, usually within a few minutes.';
+    $('done-login').hidden = true;
+    $('done-tip').innerHTML = 'The email goes to <strong>' + escapeHtml(email.value.trim()) + '</strong> and includes your login link. You can close this page.';
+    $('done').hidden = false;
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  function success(name, url) {
+    form.hidden = true;
+    $('done-name').textContent = name;
+    $('done-title').innerHTML = 'You\'re in, <span id="done-name">' + escapeHtml(name) + '</span>!';
+    $('done-lede').textContent = 'Your Tiger Tales account is ready. Log in once and you\'re set.';
+    $('done-login').hidden = false;
+    $('done-login').href = url || loginUrl({ u: name, 'new': '1' });
+    $('done-tip').innerHTML = 'Want to sign the Yearbook later? Confirm your email from the Yearbook page when you get there — we\'ll send the link to <strong>' + escapeHtml(email.value.trim()) + '</strong>.';
+    $('done').hidden = false;
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  loadQuestion();
+  if (params.get('u')) { username.value = params.get('u'); checkUsername(); }
+}());
+</script>
+</body>
+</html>
