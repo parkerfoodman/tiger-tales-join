@@ -1,0 +1,17 @@
+{
+ "alg": "PBKDF2-SHA256",
+ "iter": 150000,
+ "len": 16,
+ "map": {
+  "3920ffa5fbc59c7728fe64a00dfed966": [
+   "Tiger Tales test",
+   "Tiger Tales test 2"
+  ],
+  "a673ed9d853771af9ced6feac4757d12": [
+   "PCTest1026"
+  ]
+ },
+ "note": "Email -> username lookup for the Tiger Tales login box. Keys are slow hashes; no emails are stored.",
+ "salt": "tigertales-email-v1:7d6c4744a8f5fce5b039f8b204a3a835",
+ "v": 1
+}
