@@ -7,8 +7,14 @@
    "Tiger Tales test",
    "Tiger Tales test 2"
   ],
+  "94376e769bdc875f33117d7861e6762d": [
+   "Evamclaren1"
+  ],
   "a673ed9d853771af9ced6feac4757d12": [
    "PCTest1026"
+  ],
+  "d851b78ec3be761228bea0972fbbed4f": [
+   "Knana"
   ]
  },
  "note": "Email -> username lookup for the Tiger Tales login box. Keys are slow hashes; no emails are stored.",
